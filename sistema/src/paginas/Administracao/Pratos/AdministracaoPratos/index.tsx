@@ -1,25 +1,25 @@
 import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import http from "http/axios";
-import IRestaurante from "interfaces/IRestaurante";
+import IPrato from "interfaces/IPrato";
 import { useEffect } from "react";
 import { useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 
-export default function AdministracaoRestaurantes(){
-    const [restaurantes, setRestaurantes] = useState<IRestaurante[]>([]);
+export default function AdministracaoPratos(){
+    const [pratos, setPratos] = useState<IPrato[]>([]);
 
-    const excluir = (restauranteParaExcluir: IRestaurante) => {
-        http.delete(`restaurantes/${restauranteParaExcluir.id}/`)
+    const excluir = (pratoParaExcluir: IPrato) => {
+        http.delete(`pratos/${pratoParaExcluir.id}/`)
         .then(() => {
-            alert("Restaurante excluido com sucesso");
-            const listaRestaurantes = restaurantes.filter(restaurante => restaurante.id !== restauranteParaExcluir.id);
-            setRestaurantes([...listaRestaurantes]);
+            alert("Prato excluido com sucesso");
+            const listaPratos = pratos.filter(prato => prato.id !== pratoParaExcluir.id);
+            setPratos([...listaPratos]);
         })
     }
 
     useEffect(() => {
-        http.get<IRestaurante[]>("restaurantes/")
-            .then(resposta => setRestaurantes(resposta.data))
+        http.get<IPrato[]>("pratos/")
+            .then(resposta => setPratos(resposta.data))
             .catch(erro => console.log(erro))
     }, [])
 
@@ -32,6 +32,12 @@ export default function AdministracaoRestaurantes(){
                             Nome
                         </TableCell>
                         <TableCell>
+                            Tag
+                        </TableCell>
+                        <TableCell>
+                            Imagem
+                        </TableCell>
+                        <TableCell>
                             Editar
                         </TableCell>
                         <TableCell>
@@ -41,15 +47,21 @@ export default function AdministracaoRestaurantes(){
                 </TableHead>
                 <TableBody>
                     {
-                        restaurantes.map(restaurante =>
-                            <TableRow key={restaurante.id}>
+                        pratos.map(prato =>
+                            <TableRow key={prato.id}>
                                 <TableCell>
-                                    {restaurante.nome}
+                                    {prato.nome}
+                                </TableCell>
+                                <TableCell>
+                                    {prato.tag}
+                                </TableCell>
+                                <TableCell>
+                                    <a href={prato.imagem} target="_blank" rel="noreferrer">Ver imagem</a>
                                 </TableCell>
                                 <TableCell>
                                     <Button
                                         component={RouterLink}
-                                        to={`/admin/restaurantes/${restaurante.id}`}
+                                        to={`/admin/pratos/${prato.id}`}
                                         variant="outlined"
                                         color="info">
                                         Editar
@@ -59,7 +71,7 @@ export default function AdministracaoRestaurantes(){
                                     <Button
                                         variant="outlined"
                                         color="error"
-                                        onClick={() => excluir(restaurante)}>
+                                        onClick={() => excluir(prato)}>
                                         Excluir
                                     </Button>
                                 </TableCell>

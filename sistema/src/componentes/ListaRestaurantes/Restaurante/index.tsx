@@ -12,6 +12,7 @@ const Restaurante = ({ restaurante }: RestauranteProps) => {
     <div className={estilos.Titulo}>
       <h2>{restaurante.nome}</h2>
     </div>
+    <h1>SSSSS{restaurante.pratos?.length}SSSSS</h1>
     <div>
       {restaurante.pratos?.map(item => <Prato prato={item} key={item.id} />)}
     </div>
