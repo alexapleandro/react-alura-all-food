@@ -1,9 +1,9 @@
-import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { Button, Link, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import clientHttp from "http/axios";
 import IRestaurante from "interfaces/IRestaurante";
 import { useEffect } from "react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 
 export default function AdministracaoRestaurantes(){
     const [restaurantes, setRestaurantes] = useState<IRestaurante[]>([]);
@@ -47,9 +47,13 @@ export default function AdministracaoRestaurantes(){
                                     {restaurante.nome}
                                 </TableCell>
                                 <TableCell>
-                                    [
-                                        <Link to={`/admin/restaurantes/${restaurante.id}`}>editar</Link>
-                                    ]
+                                    <Button
+                                        component={RouterLink}
+                                        to={`/admin/restaurantes/${restaurante.id}`}
+                                        variant="outlined"
+                                        color="info">
+                                        Editar
+                                    </Button>
                                 </TableCell>
                                 <TableCell>
                                     <Button
