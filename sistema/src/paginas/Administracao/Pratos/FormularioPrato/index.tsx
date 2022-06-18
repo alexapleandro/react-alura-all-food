@@ -53,6 +53,10 @@ const FormularioPrato = () => {
 
         const formData = new FormData();
 
+        if (parametros.id) {
+            formData.append('id', parametros.id)
+        }
+
         formData.append('nome', nomePrato)
         formData.append('descricao', descricao)
 
@@ -64,9 +68,12 @@ const FormularioPrato = () => {
             formData.append('imagem', imagem)
         }
 
+        const url = parametros.id ? `pratos/${parametros.id}/` : 'pratos/';
+        const method = parametros.id ? 'PUT' : 'POST';
+
         http.request({
-            url: 'pratos/',
-            method: 'POST',
+            url,
+            method,
             headers: {
                 'Content-Type': 'multipart/form-data'
             },

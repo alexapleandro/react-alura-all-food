@@ -150,4 +150,6 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 
+media_root/*
+
 # End of https://www.toptal.com/developers/gitignore/api/django
