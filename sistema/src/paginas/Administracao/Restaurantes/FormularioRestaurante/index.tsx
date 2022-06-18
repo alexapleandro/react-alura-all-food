@@ -1,4 +1,4 @@
-import { Button, TextField } from "@mui/material";
+import { Button, TextField, Typography, Box } from "@mui/material";
 import axios from "axios";
 import IRestaurante from "interfaces/IRestaurante";
 import React from "react";
@@ -13,7 +13,7 @@ export default function FormularioRestaurante(){
     const [nomeRestaurante, setNomeRestaurante] = useState("");
 
     useEffect(() => {
-        if(parametros.id && parametros.id !== "novo"){
+        if(parametros.id){
             axios.get<IRestaurante>(`http://localhost:8000/api/v2/restaurantes/${parametros.id}/`)
                 .then(resposta =>{
                     setNomeRestaurante(resposta.data.nome)
@@ -38,14 +38,24 @@ export default function FormularioRestaurante(){
         }
     }
     return (
-        <form onSubmit={aoSubmeterForm}>
-            <TextField
-                value={nomeRestaurante}
-                onChange={evento => setNomeRestaurante(evento.target.value)}
-                label="Nome do Restaurante"
-                variant="standard" />
-
-            <Button type="submit" variant="outlined">Salvar</Button>
-        </form>
+        <Box sx={{display:"flex", flexDirection:"column", alignItems:"center"}}>
+            <Box component="form" onSubmit={aoSubmeterForm}>
+                <Typography component="h1" variant="h6">Formulário de Restaurantes</Typography>
+                <TextField
+                    value={nomeRestaurante}
+                    onChange={evento => setNomeRestaurante(evento.target.value)}
+                    label="Nome do Restaurante"
+                    variant="standard"
+                    fullWidth
+                    required
+                />
+                <Button
+                    sx={{marginTop: 1}}
+                    type="submit"
+                    variant="outlined"
+                    fullWidth
+                >Salvar</Button>
+            </Box>
+        </Box>
     )
 }
